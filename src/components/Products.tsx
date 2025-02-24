@@ -1,6 +1,9 @@
+import { indexOf } from 'lodash';
 import ProductsCart from'./ProductsCart'
+import products from '@/pages/Home'
 
-export default function Products() {
+export default function Products({products}) {
+  
   return (
     <div className='py-10'>
       <div className='flex flex-col items-center gap-4'>
@@ -15,7 +18,12 @@ export default function Products() {
           asperiores repudiandae assumenda quidem.
         </p>
       </div>
-      <ProductsCart/>
+      <div className='max-w-screen-xl mx-auto py-10 grid grid-cols-4 gap-10' >
+        {products.map((item)=>
+        (
+          <ProductsCart key={item._id} product={item}/>
+        ))}
+      </div>
     </div>
   );
 }
