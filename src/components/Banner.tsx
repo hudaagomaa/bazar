@@ -7,8 +7,7 @@ import {
   imageTwo,
   imageThree,
   imageFour,
-  imageFive
-  ,
+  imageFive ,
 } from "@/assets/banner/indexBan";
 
 export default function Banner() {
