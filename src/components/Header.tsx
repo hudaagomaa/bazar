@@ -1,4 +1,5 @@
 import { logoDark , cartImg } from "@/assets";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -7,9 +8,11 @@ export default function Header() {
      border-b-[1px] border-b-gray-800 sticky top-0 z-50"
     >
       <div className="max-w-screen-xl h-full mx-auto flex items-center justify-between relative">
+        <Link to="/">
         <div>
           <img src={logoDark} alt="logoDark" className="w-28" />
         </div>
+        </Link>
         <ul className="flex items-center gap-8 ">
           <li className="text-base text-black font-bold hover:text-orange-900 hover:underline underline-offset-2 decoration-[1px] cursor-pointer duration-300">
             HOME
