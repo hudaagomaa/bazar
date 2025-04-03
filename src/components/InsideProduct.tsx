@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { MdOutlineStar } from "react-icons/md";
+import { addToCart } from "@/redux/bazarSlice";
+import { useDispatch } from "react-redux";
 
 interface Product {
+  _id: string;
   image: string;
   isNew?: boolean;
   title: string;
@@ -13,8 +16,10 @@ interface Product {
 }
 
 export default function InsideProduct() {
+  const dispatch = useDispatch();
   const [detils, setDetils] = useState<Product | null>(null);
   const location = useLocation();
+  const [baseQty, setBaseQty] = useState(1);
 
   useEffect(() => {
     if (location.state?.item) {
@@ -24,6 +29,8 @@ export default function InsideProduct() {
 
   if (!detils)
     return <p className="text-center my-10 text-gray-500">Loading...</p>;
+
+
 
   return (
     <div>
@@ -67,18 +74,39 @@ export default function InsideProduct() {
             <div className="flex items-center justify-center w-52 p-3 gap-3 text-gray-600 border">
               <p className="text-sm">Quantity</p>
               <div className="flex items-center gap-4 text-sm font-semibold">
-                <button className="border h-5 font-normal text-lg flex items-center justify-center px-2 hover:bg-gray-700 hover:text-white cursor-pointer active:bg-black">
+                <button
+                  onClick={() => setBaseQty(Math.max(1, baseQty - 1))}
+                  className="border h-5 font-normal text-lg flex items-center justify-center px-2 hover:bg-gray-700 hover:text-white cursor-pointer active:bg-black"
+                >
                   -
                 </button>
-                <span>{1}</span>
-                <button className="border h-5 font-normal text-lg flex items-center justify-center px-2 hover:bg-gray-700 hover:text-white cursor-pointer active:bg-black">
+                <span>{baseQty}</span>
+                <button
+                  onClick={() => setBaseQty(baseQty + 1)}
+                  className="border h-5 font-normal text-lg flex items-center justify-center px-2 hover:bg-gray-700 hover:text-white cursor-pointer active:bg-black"
+                >
                   +
                 </button>
               </div>
             </div>
-            <button className="w-40 border bg-black text-white py-3 px-6 active:bg-gray-700">
+            <button
+              onClick={() =>
+                dispatch(
+                  addToCart({
+                    _id: detils._id,
+                    title: detils.title,
+                    description: detils.description,
+                    image: detils.image,
+                    price: detils.price,
+                    quantity: baseQty,
+                  })
+                )
+              }
+              className="w-40 border bg-black text-white py-3 px-6 active:bg-gray-700"
+            >
               Add to cart
             </button>
+          
           </div>
           <p className="text-base text-gray-500">
             Category:{" "}
