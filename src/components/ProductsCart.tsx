@@ -2,8 +2,8 @@ import { addToCart } from "@/redux/bazarSlice";
 import { BsArrowRight } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-// تعريف نوع المنتج
+import { ToastContainer, toast } from "react-toastify";
+import { Bounce } from "react-toastify";
 interface Product {
   _id: number;
   title: string;
@@ -13,10 +13,7 @@ interface Product {
   oldPrice?: number;
   category?: string;
   isNew?: boolean;
-}
-
-// تعريف نوع الـ props
-interface ProductCartProps {
+}interface ProductCartProps {
   product: Product;
 }
 
@@ -76,6 +73,7 @@ export default function ProductsCart({ product }: ProductCartProps) {
                     quantity: 1,
                   })
                 );
+                toast.success(`${product.title} added to cart`);
               }}
               className="absolute z-20 w-[100px] text-gray-500 hover:text-gray-900 flex items-center gap-1 top-0 transform -translate-x-32 transition-transform cursor-pointer duration-500 group-hover:translate-x-0"
             >
@@ -99,6 +97,19 @@ export default function ProductsCart({ product }: ProductCartProps) {
           </div>
         )}
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </div>
   );
 }

@@ -3,6 +3,10 @@ import { useLocation } from "react-router-dom";
 import { MdOutlineStar } from "react-icons/md";
 import { addToCart } from "@/redux/bazarSlice";
 import { useDispatch } from "react-redux";
+//import react-toastify from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+import { Bounce } from "react-toastify";
 
 interface Product {
   _id: string;
@@ -29,8 +33,6 @@ export default function InsideProduct() {
 
   if (!detils)
     return <p className="text-center my-10 text-gray-500">Loading...</p>;
-
-
 
   return (
     <div>
@@ -90,7 +92,7 @@ export default function InsideProduct() {
               </div>
             </div>
             <button
-              onClick={() =>
+              onClick={() => {
                 dispatch(
                   addToCart({
                     _id: detils._id,
@@ -100,13 +102,13 @@ export default function InsideProduct() {
                     price: detils.price,
                     quantity: baseQty,
                   })
-                )
-              }
+                );
+                toast.success(`${detils.title} added to cart`);
+              }}
               className="w-40 border bg-black text-white py-3 px-6 active:bg-gray-700"
             >
               Add to cart
             </button>
-          
           </div>
           <p className="text-base text-gray-500">
             Category:{" "}
@@ -114,6 +116,19 @@ export default function InsideProduct() {
           </p>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </div>
   );
 }

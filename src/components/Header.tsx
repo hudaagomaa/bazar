@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "@/redux/store"; 
 
+
 export default function Header() {
   const productData = useSelector((state: RootState) => state.bazar.productData);
   // const productData = useSelector((state) => state.bazar.productData);
@@ -46,6 +47,7 @@ export default function Header() {
           </div>
         </ul>
       </div>
+    
     </div>
   );
 }

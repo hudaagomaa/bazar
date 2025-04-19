@@ -1,25 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// تحديد نوع بيانات المنتج
 interface Product {
   _id: number;
   name: string;
   price: number;
   quantity:number;
-}
-
-// تحديد نوع الحالة الأولية (Initial State)
-interface BazarState {
+}interface BazarState {
   productData: Product[];
   userInfo: string | null; 
-}
-
-const initialState: BazarState = {
+}const initialState: BazarState = {
   productData: [],
   userInfo: null,
 };
 
-// إنشاء Slice باستخدام TypeScript
+//    REDUX   createSlice   
 export const bazarSlice = createSlice({
   name: "bazar",
   initialState,
@@ -32,10 +26,17 @@ export const bazarSlice = createSlice({
         state.productData.push(action.payload)
       }
     },
+    deleteItem: (state, action) => {
+      state.productData = state.productData.filter(
+        (item) => item._id !== action.payload
+      );
+    },
+    resetCart: (state) => {
+      state.productData = [];
+    },
   },
 });
-
-// تصدير الأكشن والـ Reducer
+ // EXPORTING THE ACTIONS AND REDUCER
 export const { addToCart } = bazarSlice.actions;
 export default bazarSlice.reducer;
 
